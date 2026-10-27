@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050a18">
+  <meta name="description" content="Nova TV: um launcher pessoal para organizar aplicativos e descobrir filmes e séries na Android TV.">
+  <title>Nova TV — Sua Android TV em uma nova perspectiva</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #050a18;
+      --panel: rgba(7, 15, 34, .82);
+      --line: rgba(125, 176, 255, .21);
+      --text: #f6f8ff;
+      --muted: #b5c3dd;
+      --cyan: #34c7ff;
+      --blue: #337dff;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(ellipse at 75% 18%, rgba(34, 102, 255, .22), transparent 38rem),
+        var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", Arial, sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; }
+    .wrap { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 0; border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: .04em; }
+    .brand-mark {
+      width: 38px; height: 38px; display: grid; place-items: center; border-radius: 12px;
+      background: linear-gradient(135deg, #147aff, #43e2ff);
+      color: #06101f; box-shadow: 0 0 26px rgba(37, 154, 255, .45); font-size: 20px;
+    }
+    nav { display: flex; gap: 25px; color: var(--muted); font-size: 14px; }
+    nav a { text-decoration: none; }
+    nav a:hover { color: white; }
+    .hero {
+      position: relative; overflow: hidden; min-height: 510px; margin: 32px 0 74px;
+      display: flex; align-items: center; border: 1px solid var(--line); border-radius: 30px;
+      background:
+        linear-gradient(90deg, rgba(4,8,19,.97) 0%, rgba(4,8,19,.81) 47%, rgba(4,8,19,.25) 100%),
+        linear-gradient(0deg, rgba(4,8,19,.72), transparent 48%),
+        url("wallpaper.png") center 52% / cover;
+      box-shadow: 0 28px 90px rgba(0,0,0,.38), 0 0 55px rgba(17,108,255,.12);
+    }
+    .hero-copy { position: relative; z-index: 1; max-width: 650px; padding: 64px; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 9px; color: #a9ddff;
+      text-transform: uppercase; letter-spacing: .16em; font-size: 12px; font-weight: 700;
+    }
+    .eyebrow::before { content: ""; width: 24px; height: 2px; background: var(--cyan); box-shadow: 0 0 12px var(--cyan); }
+    h1 { margin: 18px 0 16px; font-size: clamp(42px, 7vw, 76px); line-height: .98; letter-spacing: -.055em; }
+    h1 span { color: #73cfff; text-shadow: 0 0 32px rgba(51,161,255,.45); }
+    .lead { max-width: 590px; color: #d1daeb; font-size: clamp(17px, 2.3vw, 21px); }
+    .actions { display: flex; flex-wrap: wrap; gap: 13px; margin-top: 30px; }
+    .button {
+      display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 20px;
+      border-radius: 14px; text-decoration: none; font-weight: 700; font-size: 14px;
+      border: 1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.06);
+    }
+    .button.primary { color: #03101b; border-color: transparent; background: linear-gradient(100deg, #48c8ff, #83eaff); }
+    .button:hover { transform: translateY(-1px); }
+    .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 82px; }
+    .fact, .feature, .compat {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 20px;
+      box-shadow: inset 0 1px rgba(255,255,255,.04);
+    }
+    .fact { padding: 21px 24px; }
+    .fact strong { display: block; color: white; font-size: 17px; }
+    .fact span { color: var(--muted); font-size: 13px; }
+    section { margin: 78px 0; }
+    .section-head { max-width: 650px; margin-bottom: 28px; }
+    .section-head h2 { margin: 8px 0; font-size: clamp(30px, 4vw, 44px); letter-spacing: -.035em; }
+    .section-head p { margin: 0; color: var(--muted); }
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 17px; }
+    .feature { min-height: 220px; padding: 27px; }
+    .icon {
+      width: 45px; height: 45px; display: grid; place-items: center; margin-bottom: 21px;
+      color: #9fe8ff; background: rgba(33,143,255,.15); border: 1px solid rgba(77,183,255,.32);
+      border-radius: 14px; font-size: 21px;
+    }
+    .feature h3 { margin: 0 0 9px; font-size: 19px; }
+    .feature p { margin: 0; color: var(--muted); font-size: 14px; }
+    .compat { display: grid; grid-template-columns: 1fr 1.4fr; gap: 28px; align-items: center; padding: 32px; }
+    .compat h2 { margin: 0 0 10px; font-size: 29px; letter-spacing: -.03em; }
+    .compat p { margin: 0; color: var(--muted); }
+    .chips { display: flex; flex-wrap: wrap; gap: 9px; }
+    .chip { padding: 9px 13px; border: 1px solid rgba(111,166,255,.24); border-radius: 99px; background: rgba(255,255,255,.04); color: #d7e5ff; font-size: 13px; }
+    .note { color: #91a2bf; font-size: 12px; }
+    footer { margin-top: 88px; padding: 27px 0 40px; border-top: 1px solid rgba(255,255,255,.09); color: #a6b5cd; font-size: 12px; }
+    footer p { max-width: 850px; margin: 6px 0; }
+    @media (max-width: 760px) {
+      nav { gap: 13px; font-size: 12px; }
+      .hero { min-height: 470px; margin-top: 22px; background-position: 60% center; }
+      .hero-copy { padding: 36px 28px; }
+      .facts, .features { grid-template-columns: 1fr; }
+      .fact { padding: 17px 20px; }
+      .feature { min-height: auto; }
+      .compat { grid-template-columns: 1fr; padding: 25px; }
+    }
+    @media (max-width: 460px) {
+      .wrap { width: min(100% - 28px, 1120px); }
+      header { padding: 18px 0; }
+      nav { gap: 10px; }
+      nav a:first-child { display: none; }
+      .hero { min-height: 490px; border-radius: 22px; }
+      .hero-copy { padding: 30px 22px; }
+      .actions .button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="#" aria-label="Nova TV, início">
+        <span class="brand-mark">N</span><span>NOVA TV</span>
+      </a>
+      <nav aria-label="Navegação principal">
+        <a href="#recursos">Recursos</a>
+        <a href="#compatibilidade">Compatibilidade</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <div class="eyebrow">Projeto pessoal · Android TV</div>
+          <h1 id="hero-title">Sua TV.<br><span>Seu universo.</span></h1>
+          <p class="lead">Uma central visual para organizar aplicativos e descobrir filmes e séries na Android TV, com navegação simples pelo controle remoto.</p>
+          <div class="actions">
+            <a class="button primary" href="#recursos">Conheça os recursos</a>
+            <a class="button" href="#compatibilidade">Ver compatibilidade</a>
+          </div>
+        </div>
+      </section>
+
+      <div class="facts" aria-label="Resumo do projeto">
+        <div class="fact"><strong>Android TV</strong><span>Interface horizontal para televisão</span></div>
+        <div class="fact"><strong>Controle remoto</strong><span>Navegação por foco e D-pad</span></div>
+        <div class="fact"><strong>Catálogo TMDB</strong><span>Artes e dados de filmes e séries</span></div>
+      </div>
+
+      <section id="recursos">
+        <div class="section-head">
+          <div class="eyebrow">Uma tela inicial mais pessoal</div>
+          <h2>O essencial, em um só lugar.</h2>
+          <p>A Nova TV é um launcher visual para facilitar o acesso aos aplicativos disponíveis na televisão.</p>
+        </div>
+        <div class="features">
+          <article class="feature">
+            <div class="icon" aria-hidden="true">▦</div>
+            <h3>Atalhos organizados</h3>
+            <p>Aplicativos instalados aparecem em cards próprios. A disponibilidade depende dos apps presentes e compatíveis com a TV.</p>
+          </article>
+          <article class="feature">
+            <div class="icon" aria-hidden="true">✦</div>
+            <h3>Banners de descoberta</h3>
+            <p>Artes de filmes e séries populares no Brasil ajudam a dar vida aos cards e alternam automaticamente.</p>
+          </article>
+          <article class="feature">
+            <div class="icon" aria-hidden="true">⌖</div>
+            <h3>Feita para o controle</h3>
+            <p>Foco visível, navegação por setas e acesso rápido aos aplicativos usando o controle remoto.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="compatibilidade" class="compat">
+        <div>
+          <div class="eyebrow">Plataforma</div>
+          <h2>Desenvolvida para Android TV</h2>
+          <p>Projeto pessoal preparado e validado inicialmente em uma televisão TCL com Android TV 9.</p>
+        </div>
+        <div>
+          <div class="chips">
+            <span class="chip">Android TV</span>
+            <span class="chip">Navegação D-pad</span>
+            <span class="chip">Aplicativos instalados</span>
+            <span class="chip">Catálogo no Brasil</span>
+          </div>
+          <p class="note" style="margin-top:16px">A Nova TV organiza atalhos e exibe informações de catálogo. A reprodução de filmes, séries e vídeos acontece nos aplicativos correspondentes, quando instalados.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p><strong>Nova TV</strong> é um projeto pessoal e independente. Marcas e aplicativos citados pertencem aos respectivos titulares; sua presença ou abertura depende da instalação e compatibilidade na televisão.</p>
+      <p>Este produto usa a API do TMDB, mas não é endossado nem certificado pelo TMDB.</p>
+    </footer>
+  </div>
+</body>
+</html>
